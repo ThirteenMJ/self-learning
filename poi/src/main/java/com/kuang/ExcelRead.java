@@ -2,12 +2,9 @@ package com.kuang;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFCellUtil;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -139,5 +136,32 @@ public class ExcelRead {
             }
         }
         in.close();
+    }
+
+    @Test
+    public void testFormula() throws IOException {
+        InputStream in = new FileInputStream(PATH + "公式.xls");
+        Workbook workbook = new HSSFWorkbook(in);
+        Sheet sheet = workbook.getSheetAt(0);
+        Row row = sheet.getRow(4);
+        Cell cell = row.getCell(0);
+        //拿到计算公式
+        FormulaEvaluator formulaEvaluator = new HSSFFormulaEvaluator((HSSFWorkbook) workbook);
+        //输出单元格的内容
+        int cellType = cell.getCellType();
+        switch (cellType) {
+            //公式
+            case Cell.CELL_TYPE_FORMULA:
+                String formula = cell.getCellFormula();
+                System.out.println(formula);
+
+                //计算
+                CellValue evaluate = formulaEvaluator.evaluate(cell);
+                String cellValue = evaluate.formatAsString();
+                System.out.println(cellValue);
+                break;
+        }
+
+
     }
 }
