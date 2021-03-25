@@ -3,6 +3,7 @@ package tuling;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * @author thirteenmj
@@ -53,6 +54,9 @@ public class AppleServer {
                 result.add(apple);
             }
         }
+
+        //基于stream进行过滤
+        result = appleStore.stream().filter(predicate).collect(Collectors.toList());
         return result;
     }
 
