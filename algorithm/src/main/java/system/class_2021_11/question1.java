@@ -1,4 +1,4 @@
-package 每周算法课.第2021年11月.第4周;
+package system.class_2021_11;
 
 /**
  * @author: thirteenmj
