@@ -1,78 +1,67 @@
 package systemClass.class01;
 
-
 import java.util.Arrays;
 
 /**
  * @author: thirteenmj
- * @date: 2022-01-19 22:51
+ * @date: 2022-01-20 21:34
  */
-public class Code01_SelectionSort {
+public class Code02_BubbleSort {
 
-    /**
-     * 按照升序进行排序
-     *
-     * @param arr
-     */
-    public static void selectionSort(int[] arr) {
-        for (int i = 0; i < arr.length - 1; i++) {
-            int minIndex = i;
-            for (int j = i + 1; j < arr.length; j++) {
-                minIndex = arr[j] < arr[minIndex] ? j : minIndex;
+    public static void bubbleSort(int[] arr) {
+        for (int i = arr.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
+                }
             }
-            swap(arr, i, minIndex);
         }
     }
 
-    /**
-     * 交换两个位置的数字
-     *
-     * @param arr
-     * @param i
-     * @param j
-     */
-    private static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
+    public static void swap(int[] arr, int i, int j) {
+        if (arr == null) {
+            return;
+        }
+        if (i == j) {
+            return;
+        }
+
+        arr[i] = arr[i] ^ arr[j];
+        arr[j] = arr[i] ^ arr[j];
+        arr[i] = arr[i] ^ arr[j];
     }
 
 
     public static void main(String[] args) {
         int testTime = 50000;
+        int maxLength = 100;
         int maxValue = 100;
-        int maxSize = 100;
-        boolean succeed = true;
 
         for (int i = 0; i < testTime; i++) {
-            int[] arr = generateRandomArray(maxValue, maxSize);
+
+            int[] arr = generationArray(maxLength, maxValue);
             int[] arr1 = copyArray(arr);
 
-            selectionSort(arr);
-            Arrays.sort(arr1);
+            Arrays.sort(arr);
+            bubbleSort(arr1);
 
             if (!isEquals(arr, arr1)) {
                 printArray(arr);
                 printArray(arr1);
-                succeed = false;
-                break;
+                System.out.println("算法错误");
+                return;
             }
         }
-        System.out.println(succeed ? "Nice" : "Fucking fucked");
-
+        System.out.println("算法正确");
     }
-
     /**
      * 打印数组
      *
      * @param arr
      */
     private static void printArray(int[] arr) {
-        if (arr == null) {
-            return;
-        }
         for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i] + " ");
+            System.out.print(arr[i]);
         }
         System.out.println();
     }
@@ -91,9 +80,6 @@ public class Code01_SelectionSort {
         }
         if (arr != null && arr1 == null) {
             return false;
-        }
-        if (arr == null && arr1 == null) {
-            return true;
         }
 
         if (arr.length != arr1.length) {
@@ -117,11 +103,6 @@ public class Code01_SelectionSort {
      * @return
      */
     private static int[] copyArray(int[] arr) {
-
-        if (arr == null) {
-            return null;
-        }
-
         int[] ans = new int[arr.length];
 
         for (int i = 0; i < arr.length; i++) {
@@ -138,12 +119,13 @@ public class Code01_SelectionSort {
      * @param maxSize
      * @return
      */
-    private static int[] generateRandomArray(int maxValue, int maxSize) {
-        int size = (int) ((maxSize + 1) * Math.random());
+    private static int[] generationArray(int maxValue, int maxSize) {
+        int size = (int) (maxSize * Math.random()) + 1;
         int[] arr = new int[size];
         for (int i = 0; i < size; i++) {
-            arr[i] = (int) ((maxValue + 1) * Math.random()) - (int) (maxValue * Math.random());
+            arr[i] = (int) (maxValue * Math.random()) + 1;
         }
         return arr;
     }
+
 }

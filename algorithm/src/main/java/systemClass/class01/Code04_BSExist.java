@@ -96,10 +96,6 @@ public class Code04_BSExist {
         System.out.println();
     }
 
-
-
-
-
     /**
      * 创建一个数组
      * Math.random() -> [0,1) 的所有小数，等概率的返回一个
