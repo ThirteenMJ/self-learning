@@ -3,27 +3,33 @@ package systemClass.class01;
 import java.util.Arrays;
 
 /**
- * 在有序数组上，找满足大于等于 value 的最左位置
+ * 在有序数组 arr 上，找满足小于等于 value 的最右位置
  *
  * @author: thirteenmj
  * @date: 2022-01-15 21:40
  */
-public class Code05_BSNearLeft {
+public class Code06_BSNearRight {
 
-    public static int nearLeft(int[] arr, int target) {
+    public static int nearRight(int[] arr, int target) {
+        if (arr == null || arr.length == 0) {
+            return -1;
+        }
+
         int left = 0;
         int right = arr.length - 1;
-        int mid = 0;
         int index = -1;
+        int mid = 0;
+
         while (left <= right) {
             mid = left + ((right - left) >> 1);
-            if (arr[mid] >= target) {
+            if (arr[mid] <= target) {
                 index = mid;
-                right = mid - 1;
-            } else {
                 left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
+
         return index;
     }
 
@@ -37,9 +43,12 @@ public class Code05_BSNearLeft {
             int[] arr = generateRandomArray(maxLength, maxValue);
             int target = (int) ((maxValue + 1) * Math.random()) - (int) (maxValue * Math.random());
 
-            int result1 = nearLeft(arr, target);
+            int result1 = nearRight(arr, target);
             int result2 = test(arr, target);
             if (result1 != result2) {
+                System.out.print("数组：");
+                printArr(arr);
+                System.out.println("目标值：" + target);
                 System.out.println("算法结果：" + result1);
                 System.out.println("对数器结果：" + result2);
                 isTrue = false;
@@ -56,8 +65,8 @@ public class Code05_BSNearLeft {
             return -1;
         }
 
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] >= target) {
+        for (int i = arr.length - 1; i >= 0; i--) {
+            if (arr[i] <= target) {
                 return i;
             }
         }
