@@ -12,6 +12,28 @@ import java.util.List;
  */
 public class Code01_ReverseList {
 
+
+    /**
+     *
+     * @param head
+     * @return
+     */
+    private static Node revertLinkedList(Node head) {
+
+        Node previous = null;
+        Node next = null;
+
+        while (head != null) {
+            next = head.next;
+            head.next = previous;
+            previous = head;
+            head = next;
+        }
+
+
+        return previous;
+    }
+
     /**
      * 单链表结构
      */
@@ -53,19 +75,72 @@ public class Code01_ReverseList {
 
             Node head = generateLinkedList(maxValue, maxLength);
             Node copy = copyLinkedList(head);
-//            Node result1 = reverLinkedList(copy);
-//            Node result2 = testReverLinkedList(result1);
+            Node result1 = revertLinkedList(copy);
+            Node result2 = testRevertLinkedList(result1);
+            if (!isEqualsForLinkedList(head, result2)) {
+                System.out.println("垃圾");
+                System.out.print("原单链条：");
+                printLikedList(head);
+                System.out.println("现单链条:");
+                printLikedList(result2);
+                return;
+            }
 
-
-//            Node result1 = verificationReverse(node);
-//            Node result2 = reverse(node);
-//
-//            if (!isEquals()) {
-//
-//            }
+            System.out.println("单链条测试通过");
 
         }
 
+    }
+
+    private static boolean isEqualsForLinkedList(Node firstNode, Node secondNode) {
+        Node temp1 = firstNode;
+        Node temp2 = secondNode;
+
+        if (firstNode == null && secondNode != null) {
+            return false;
+        }
+
+        if (firstNode != null && secondNode == null) {
+            return false;
+        }
+
+        while (temp1 != null && temp2 != null) {
+            if (temp1.value != temp2.value) {
+                return false;
+            }
+            temp1 = temp1.next;
+            temp2 = temp2.next;
+        }
+
+        if (firstNode == null && secondNode != null) {
+            return false;
+        }
+
+        if (firstNode != null && secondNode == null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     *
+     * @param head
+     * @return
+     */
+    private static Node testRevertLinkedList(Node head) {
+
+        Node newHead = new Node(head.value);
+        head = head.next;
+        Node temp = newHead;
+        while (head != null) {
+            Node node = new Node(head.value);
+            node.next = temp;
+            temp = node;
+            head = head.next;
+        }
+
+        return temp;
     }
 
     /**
@@ -75,17 +150,22 @@ public class Code01_ReverseList {
      * @return
      */
     private static Node copyLinkedList(Node head) {
-        Node copyHead = new Node(head.value);
-        Node temp = copyHead;
-        Node tempHead = head.next;
-        while (tempHead != null) {
-            Node node = new Node(temp.value);
-            temp.next = node;
-            temp = node;
-            tempHead = tempHead.next;
+        if (head == null) {
+            return null;
         }
 
-        return copyHead;
+        Node newHead = new Node(head.value);
+        Node temp = newHead;
+        head = head.next;
+
+        while (head != null) {
+            Node node = new Node(head.value);
+            temp.next = node;
+            temp = temp.next;
+            head = head.next;
+        }
+
+        return newHead;
     }
 
 
