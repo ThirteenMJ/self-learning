@@ -66,6 +66,20 @@ public class Code01_ReverseList {
         }
     }
 
+    public static class DoubleNode {
+
+        public int value;
+
+        public DoubleNode pre;
+
+        public DoubleNode next;
+
+        public DoubleNode(int value) {
+            this.value = value;
+        }
+
+    }
+
     public static void main(String[] args) {
         int testTime = 50000;
         int maxValue = 100;
@@ -87,6 +101,9 @@ public class Code01_ReverseList {
             }
 
             System.out.println("单链条测试通过");
+        }
+
+        for (int i = 0; i < testTime; i++) {
 
         }
 
@@ -210,6 +227,13 @@ public class Code01_ReverseList {
 
             temp = node;
         }
+        return head;
+    }
+
+    private static DoubleNode generateDoubleList(int maxValue, int maxLength) {
+        DoubleNode head = new DoubleNode(1);
+
+
         return head;
     }
 
