@@ -12,6 +12,35 @@ import java.util.List;
  */
 public class Code01_ReverseList {
 
+    /**
+     * 单链表结构
+     */
+    public static class Node {
+
+        public Node next;
+
+        public int value;
+
+        public Node(int value) {
+            this.value = value;
+        }
+    }
+
+    /**
+     * 双链表结构
+     */
+    public static class DoubleNode {
+
+        public int value;
+
+        public DoubleNode pre;
+
+        public DoubleNode next;
+
+        public DoubleNode(int value) {
+            this.value = value;
+        }
+    }
 
     /**
      *
@@ -30,55 +59,74 @@ public class Code01_ReverseList {
             head = next;
         }
 
-
         return previous;
     }
 
-    /**
-     * 单链表结构
-     */
-    public static class Node {
-
-        public Node next;
-
-        public int value;
-
-        public Node(int value) {
-            this.value = value;
+    private static DoubleNode revertDoubleList(DoubleNode head) {
+        DoubleNode pre = null;
+        DoubleNode next = null;
+        while (head != null) {
+            next = head.next;
+            head.next = pre;
+            head.pre = next;
+            pre = head;
+            head = next;
         }
-
-        public Node(Node next, int value) {
-            this.next = next;
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-
-            List<Integer> list = new ArrayList<>();
-            Node temp = this;
-            while (temp != null) {
-                list.add(this.value);
-                temp = temp.next;
-            }
-
-            return list.toString();
-        }
+        return pre;
     }
 
-    public static class DoubleNode {
-
-        public int value;
-
-        public DoubleNode pre;
-
-        public DoubleNode next;
-
-        public DoubleNode(int value) {
-            this.value = value;
+    private static Node testReverseLinkedList(Node head) {
+        if (head == null) {
+            return null;
         }
 
+        ArrayList<Node> list = new ArrayList<>();
+
+        while (head != null) {
+            list.add(head);
+            head = head.next;
+        }
+        list.get(0).next = null;
+        int length = list.size();
+        for (int i = 1; i < length; i++) {
+            list.get(i).next = list.get(i -1);
+        }
+        return list.get(length - 1);
     }
+
+    private static DoubleNode testReverseDoubleList(DoubleNode head) {
+        if (head == null) {
+            return null;
+        }
+
+        ArrayList<DoubleNode> list = new ArrayList<>();
+
+        while (head != null) {
+            list.add(head);
+            head = head.next;
+        }
+        list.get(0).next = null;
+        DoubleNode pre = list.get(0);
+        int length = list.size();
+        for (int i = 1; i < length -1; i++) {
+            DoubleNode cur = list.get(i);
+            cur.next = list.get(i - 1);
+            cur.pre = pre;
+            pre = cur;
+        }
+        return list.get(length - 1);
+    }
+
+
+    private static DoubleNode generateDoubleList(int maxValue, int maxLength) {
+        int length = (int) (maxLength * Math.random() + 1);
+
+        DoubleNode head = new DoubleNode(1);
+
+
+        return head;
+    }
+
 
     public static void main(String[] args) {
         int testTime = 50000;
@@ -230,11 +278,6 @@ public class Code01_ReverseList {
         return head;
     }
 
-    private static DoubleNode generateDoubleList(int maxValue, int maxLength) {
-        DoubleNode head = new DoubleNode(1);
 
-
-        return head;
-    }
 
 }
