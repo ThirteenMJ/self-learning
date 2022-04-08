@@ -6,7 +6,7 @@ package beginClass;
  * @author: thirteenmj
  * @date: 2022-04-07 19:52
  */
-public class Class06_PrintB {
+public class Code06_PrintB {
 
     public static void print(int number) {
         for (int i = 31; i >= 0; i--) {
