@@ -1,4 +1,4 @@
-package beginClass;
+package beginClass.class01;
 
 /**
  * 将数字的二进制 32 位打印出来

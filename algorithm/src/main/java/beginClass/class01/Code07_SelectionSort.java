@@ -1,4 +1,4 @@
-package beginClass;
+package beginClass.class01;
 
 /**
  * 选择排序 + 冒泡排序 + 插入排序
