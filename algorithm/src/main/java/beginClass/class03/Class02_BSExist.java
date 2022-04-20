@@ -3,13 +3,43 @@ package beginClass.class03;
 import java.util.Arrays;
 
 /**
+ * 判断有序数组是否包含指定数
+ * 查找 >= 指定数的最左位置
+ *
  * @author: thirteenmj
  * @date: 2022-04-20 19:47
  */
 public class Class02_BSExist {
 
     /**
-     * 根据二分法查找有序数组中的指定数的位置
+     * 查找 >= number 最左的位置
+     *
+     * @param arr
+     * @param number
+     * @return
+     */
+    public static int moreLeftNoLessNumberIndex(int[] arr, int number) {
+        if (null == arr || arr.length == 0) {
+            return -1;
+        }
+        int ans = -1;
+        int left = 0;
+        int right = arr.length -1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] >= number) {
+                ans = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+
+    /**
+     * 判断有序数组是否包含指定数
      *
      * @param arr
      * @param number
@@ -39,11 +69,61 @@ public class Class02_BSExist {
     public static void main(String[] args) {
         int maxSize = 50;
         int maxValue = 20;
-        int[] arr = generateRandomArray(maxSize, maxValue);
-        printArr(arr);
-        int number = (int) (((Math.random() * maxSize) + 1) - (Math.random() * maxSize));
-        System.out.println("number:" + number);
-        System.out.println("是否发现：" + find(arr,number));
+        int testTime = 10000;
+        for (int i = 0; i < testTime; i++) {
+            int[] arr = generateRandomArray(maxSize, maxValue);
+            int number = (int) (((Math.random() * maxSize) + 1) - (Math.random() * maxSize));
+            boolean myBoolean = find(arr, number);
+            boolean testBoolean = testFind(arr, number);
+            if (myBoolean != testBoolean) {
+                System.out.println("出现错误");
+                printArr(arr);
+                System.out.println("number:" + number);
+                System.out.println("是否发现：" + find(arr,number));
+            }
+            int myAnswer = moreLeftNoLessNumberIndex(arr, number);
+            int testAnswer = testLeftNoLessNumberIndex(arr, number);
+            if (myAnswer != testAnswer) {
+                System.out.println("出现错误");
+                printArr(arr);
+                System.out.println("number:" + number);
+                System.out.println("myAnswer:" + myAnswer);
+                System.out.println("testAnswer:" + testAnswer);
+                break;
+            }
+        }
+        System.out.println("success");
+    }
+
+    /**
+     * 测试 找出指定数在有序数组中的位置
+     *
+     * @param arr
+     * @param number
+     * @return
+     */
+    private static int testLeftNoLessNumberIndex(int[] arr, int number) {
+        if (null == arr || arr.length == 0) {
+            return -1;
+        }
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] >= number) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static boolean testFind(int[] arr, int number) {
+        if (null == arr || arr.length == 0) {
+            return false;
+        }
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == number) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
