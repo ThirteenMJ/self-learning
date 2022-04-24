@@ -2,6 +2,7 @@ package beginClass.class04;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  * 利用单链表实现队列和栈
@@ -125,6 +126,84 @@ public class Code02_LinkedListToQueueAndStack {
         }
     }
 
+    public static class MyStack<T> {
+        public Node<T> head;
+        public int size;
+
+        public MyStack() {
+            this.head = null;
+            this.size = 0;
+        }
+
+        /**
+         * 判断堆是否为空
+         *
+         * @return
+         */
+        public boolean isEmpty() {
+            return size == 0;
+        }
+
+        /**
+         * 获取堆的大小
+         *
+         * @return
+         */
+        public int size() {
+            return this.size;
+        }
+
+        /**
+         * 往堆中添加元素
+         *
+         * @param value
+         */
+        public void push(T value) {
+            if (null == value) {
+                return;
+            }
+
+            Node<T> node = new Node<>(value);
+
+            if (head != null) {
+                node.next = head;
+            }
+            head = node;
+            size++;
+        }
+
+        /**
+         * 弹出最上方的元素
+         *
+         * @return
+         */
+        public T pop() {
+            if (head == null) {
+                return null;
+            }
+
+            T value = head.value;
+
+            head = head.next;
+            size--;
+
+            return value;
+        }
+
+        /**
+         * 查看最上方的元素
+         *
+         * @return
+         */
+        public T peek() {
+            if (head == null) {
+                return null;
+            }
+            T value = head.value;
+            return value;
+        }
+    }
+
     /**
      * 测试自己实现的队列是否正确
      *
@@ -132,7 +211,7 @@ public class Code02_LinkedListToQueueAndStack {
      * @param maxValue
      */
     public static void testQueue(int testTime, int maxValue) {
-        System.out.println("开始验证队列是否正确");
+        System.out.println("验证队列是否正确开始");
         MyQueue<Integer> myQueue = new MyQueue<>();
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < testTime; i++) {
@@ -177,9 +256,59 @@ public class Code02_LinkedListToQueueAndStack {
                     }
                 }
             }
-
         }
         System.out.println("验证队列是否正确结束");
+    }
+
+    public static void testStack(int testTIme, int maxValue) {
+        System.out.println("验证堆是否正确开始");
+        MyStack<Integer> myStack = new MyStack<>();
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < testTIme; i++) {
+            if (myStack.isEmpty() != stack.isEmpty()) {
+                System.out.println("判断是否为空出错！");
+                System.out.println("myQueue:" + myStack.isEmpty());
+                System.out.println("queue:" + stack.isEmpty());
+                break;
+            }
+
+            if (myStack.size() != stack.size()) {
+                System.out.println("大小不一致");
+                System.out.println("myQueue:" + myStack.size());
+                System.out.println("queue:" + stack.size());
+                break;
+            }
+
+            double time = Math.random();
+
+            if (time < 0.33) {
+                Integer ans = (int) (Math.random() * maxValue);
+                myStack.push(ans);
+                stack.add(ans);
+            } else if (time < 0.66) {
+                if (!myStack.isEmpty() && !stack.isEmpty()) {
+                    Integer myQueuePoll = myStack.pop();
+                    Integer queuePoll = stack.pop();
+                    if (!myQueuePoll.equals(queuePoll)) {
+                        System.out.println("弹出内容不一致！");
+                        System.out.println("myQueue:" + myQueuePoll);
+                        System.out.println("queue:" + queuePoll);
+                        break;
+                    }
+                }
+            } else {
+                if (!myStack.isEmpty() && !stack.isEmpty()) {
+                    if (!myStack.peek().equals(stack.peek())) {
+                        System.out.println("查询内容不一致！");
+                        System.out.println("myQueue:" + myStack.peek());
+                        System.out.println("queue:" + stack.peek());
+                        break;
+                    }
+                }
+            }
+        }
+        System.out.println("验证堆是否正确结束");
     }
 
     public static void main(String[] args) {
@@ -187,5 +316,6 @@ public class Code02_LinkedListToQueueAndStack {
         int maxLength = 100000;
         int testTime = 10000;
         testQueue(testTime, maxValue);
+        testStack(testTime, maxValue);
     }
 }
