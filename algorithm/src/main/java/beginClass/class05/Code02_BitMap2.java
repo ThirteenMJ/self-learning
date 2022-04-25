@@ -57,6 +57,16 @@ public class Code02_BitMap2 {
 
             }
         }
+        for (int i = 0; i < maxValue; i++) {
+            boolean result1 = bitMap.containsKey(i);
+            boolean result2 = hashSet.contains(i);
+            if (result1 != result2) {
+                System.out.println("是否包含不一致！");
+                System.out.println("bitMap：" + result1);
+                System.out.println("hashSet：" + result2);
+                break;
+            }
+        }
         System.out.println("测试结束！");
     }
 }
