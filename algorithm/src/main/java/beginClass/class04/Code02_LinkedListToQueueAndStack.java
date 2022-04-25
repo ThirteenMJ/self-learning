@@ -38,7 +38,7 @@ public class Code02_LinkedListToQueueAndStack {
 
         public Node<T> head;
         public Node<T> tail;
-        public int size = 0;
+        public int size;
 
         public MyQueue() {
             this.head = null;
@@ -91,22 +91,15 @@ public class Code02_LinkedListToQueueAndStack {
          * @return
          */
         public T poll() {
-            if (head == null) {
-                return null;
-            }
-
             T ans = null;
-
             if (head != null) {
                 ans = head.value;
                 head = head.next;
+                size--;
             }
-
             if (head == null) {
                 tail = null;
             }
-            size--;
-
             return ans;
         }
 
@@ -116,16 +109,15 @@ public class Code02_LinkedListToQueueAndStack {
          * @return
          */
         public T peek() {
-            if (head == null) {
-                return null;
-            }
-
-            T ans = head.value;
-
-            return ans;
+            return null == head ? null : head.value;
         }
     }
 
+    /**
+     * 利用单链表实现的栈
+     *
+     * @param <T>
+     */
     public static class MyStack<T> {
         public Node<T> head;
         public int size;
@@ -178,15 +170,12 @@ public class Code02_LinkedListToQueueAndStack {
          * @return
          */
         public T pop() {
-            if (head == null) {
-                return null;
+            T value = null;
+            if (head != null) {
+                value = head.value;
+                head = head.next;
+                size--;
             }
-
-            T value = head.value;
-
-            head = head.next;
-            size--;
-
             return value;
         }
 
@@ -196,11 +185,7 @@ public class Code02_LinkedListToQueueAndStack {
          * @return
          */
         public T peek() {
-            if (head == null) {
-                return null;
-            }
-            T value = head.value;
-            return value;
+            return null == head ? null : head.value;
         }
     }
 
@@ -236,7 +221,7 @@ public class Code02_LinkedListToQueueAndStack {
                 myQueue.offer(ans);
                 queue.add(ans);
             } else if (time < 0.66) {
-                if (!myQueue.isEmpty() && !queue.isEmpty()) {
+                if (!myQueue.isEmpty()) {
                     Integer myQueuePoll = myQueue.poll();
                     Integer queuePoll = queue.poll();
                     if (!myQueuePoll.equals(queuePoll)) {
@@ -247,7 +232,7 @@ public class Code02_LinkedListToQueueAndStack {
                     }
                 }
             } else {
-                if (!myQueue.isEmpty() && !queue.isEmpty()) {
+                if (!myQueue.isEmpty()) {
                     if (!myQueue.peek().equals(queue.peek())) {
                         System.out.println("查询内容不一致！");
                         System.out.println("myQueue:" + myQueue.peek());
@@ -260,6 +245,12 @@ public class Code02_LinkedListToQueueAndStack {
         System.out.println("验证队列是否正确结束");
     }
 
+    /**
+     * 测试自己实现的栈是否正确
+     *
+     * @param testTIme
+     * @param maxValue
+     */
     public static void testStack(int testTIme, int maxValue) {
         System.out.println("验证堆是否正确开始");
         MyStack<Integer> myStack = new MyStack<>();
@@ -287,7 +278,7 @@ public class Code02_LinkedListToQueueAndStack {
                 myStack.push(ans);
                 stack.add(ans);
             } else if (time < 0.66) {
-                if (!myStack.isEmpty() && !stack.isEmpty()) {
+                if (!myStack.isEmpty()) {
                     Integer myQueuePoll = myStack.pop();
                     Integer queuePoll = stack.pop();
                     if (!myQueuePoll.equals(queuePoll)) {
@@ -298,7 +289,7 @@ public class Code02_LinkedListToQueueAndStack {
                     }
                 }
             } else {
-                if (!myStack.isEmpty() && !stack.isEmpty()) {
+                if (!myStack.isEmpty()) {
                     if (!myStack.peek().equals(stack.peek())) {
                         System.out.println("查询内容不一致！");
                         System.out.println("myQueue:" + myStack.peek());
