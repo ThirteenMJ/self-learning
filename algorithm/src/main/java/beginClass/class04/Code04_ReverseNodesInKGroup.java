@@ -33,7 +33,7 @@ public class Code04_ReverseNodesInKGroup {
         while (lastEnd.next != null) {
             start = lastEnd.next;
             end = getKGroupEnd(start, k);
-            if (end == null) {
+            if (null == end) {
                 return head;
             }
 
