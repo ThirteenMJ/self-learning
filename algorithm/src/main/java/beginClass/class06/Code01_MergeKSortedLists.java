@@ -41,22 +41,22 @@ public class Code01_MergeKSortedLists {
                 queue.add(list);
             }
         }
-        ListNode head = queue.peek();
-        ListNode start = null;
+        if (queue.isEmpty()) {
+            return null;
+        }
+        ListNode head = queue.poll();
+        ListNode start = head;
+        if (head.next != null) {
+            queue.add(head.next);
+        }
         while (!queue.isEmpty()) {
             ListNode node = queue.poll();
             if (node.next != null) {
                 queue.add(node.next);
             }
-            if (start == null) {
-                start = node;
-            } else {
-                start.next = node;
-                start = start.next;
-            }
+            start.next = node;
+            start = start.next;
         }
-
         return head;
-
     }
 }
