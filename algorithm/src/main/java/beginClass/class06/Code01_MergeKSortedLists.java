@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
+ * 合并 k 个单链表
  * 测试链接：https://leetcode.com/problems/merge-k-sorted-lists/
  * 中文链接：https://leetcode-cn.com/problems/merge-k-sorted-lists/
  *
