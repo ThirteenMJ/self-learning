@@ -26,7 +26,7 @@ public class Code02_SameTree {
             if (null == p ^ null == q) {
                 return false;
             }
-            if (null == p) {
+            if (null == p && null == q) {
                 return true;
             }
             return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
