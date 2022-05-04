@@ -1,6 +1,7 @@
 package beginClass.class08;
 
 import java.util.Arrays;
+import java.util.Stack;
 
 /**
  * 快排
@@ -11,7 +12,7 @@ import java.util.Arrays;
 public class Code03_PartitionAndQuickSort {
 
     /**
-     * 递归实现
+     * 递归实现快排
      *
      * @param arr
      */
@@ -43,6 +44,64 @@ public class Code03_PartitionAndQuickSort {
         process(arr, moreLeft + 1, right);
     }
 
+    public static class Job {
+        public int L;
+        public int R;
+
+        public Job() {
+        }
+
+        public Job(int l, int r) {
+            L = l;
+            R = r;
+        }
+    }
+
+    /**
+     * 非递归实现快排
+     *
+     * @param arr
+     */
+    public static void quickSort2(int[] arr) {
+        if (null == arr || arr.length < 2) {
+            return;
+        }
+        Stack<Job> stack = new Stack<>();
+        Job job = new Job(0, arr.length - 1);
+        stack.push(job);
+        while (!stack.isEmpty()) {
+            Job pop = stack.pop();
+            Job partition = partition(arr, pop.L, pop.R);
+            if (partition.L > pop.L) {
+                stack.push(new Job(pop.L, partition.L));
+            }
+            if (partition.R < pop.R) {
+                stack.push(new Job(partition.R, pop.R));
+            }
+        }
+
+    }
+
+    public static Job partition(int[] arr, int left, int right) {
+        if (left >= right) {
+            return new Job(-1, -1);
+        }
+        int lessRight = left - 1;
+        int moreLeft = right;
+        int index = left;
+        while (index < moreLeft) {
+            if (arr[index] < arr[right]) {
+                swap(arr, index++, ++lessRight);
+            } else if (arr[index] > arr[right]){
+                swap(arr, index, --moreLeft);
+            } else {
+                index++;
+            }
+        }
+        swap(arr, moreLeft, right);
+        return new Job(lessRight, moreLeft + 1);
+    }
+
     private static void swap(int[] arr, int index1, int index2) {
         int temp = arr[index1];
         arr[index1] = arr[index2];
@@ -58,7 +117,7 @@ public class Code03_PartitionAndQuickSort {
             int[] arr1 = copyArray(arr);
             int[] arr2 = copyArray(arr);
             Arrays.sort(arr1);
-            quickSort1(arr2);
+            quickSort2(arr2);
             if (!isEquals(arr1, arr2)) {
                 System.out.println("出错了");
                 System.out.println("原数组：");
