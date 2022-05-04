@@ -17,7 +17,7 @@ public class Code02_MergeSort {
         if (null == arr || arr.length < 2) {
             return;
         }
-        sort1(arr, 0, arr.length - 1);
+        sort2(arr, 0, arr.length - 1);
     }
 
     /**
@@ -44,6 +44,55 @@ public class Code02_MergeSort {
     }
 
     /**
+     * 非递归方法
+     *
+     * @param arr
+     * @param left
+     * @param right
+     */
+    private static void sort2(int[] arr, int left, int right) {
+        if (null == arr || arr.length < 2) {
+            return;
+        }
+
+        if (left >= right) {
+            return;
+        }
+        int n = right - left + 1;
+        int step = 1;
+
+        while (step < n) {
+            int l = left;
+            while (l < right) {
+                int m = 0;
+                int r = 0;
+                if (right - l + 1> step) {
+                    m = l + step - 1;
+                } else {
+                    break;
+                }
+                if (right - m >= step) {
+                    r = m + step;
+                } else {
+                    r = right;
+                }
+                merge(arr, l, m, r);
+                if (r == right) {
+                    break;
+                } else {
+                    l = r + 1;
+                }
+            }
+            if (step > (n >> 1)) {
+                break;
+            }
+            step *= 2;
+        }
+
+    }
+
+
+    /**
      * 合并左右两遍
      *
      * @param arr
@@ -57,11 +106,7 @@ public class Code02_MergeSort {
         int[] ans = new int[right - left + 1];
         int index = 0;
         while (leftIndex <= mid && rightIndex <= right) {
-            if (arr[leftIndex] <= arr[rightIndex]) {
-                ans[index++] = arr[leftIndex++];
-            } else {
-                ans[index++] = arr[rightIndex++];
-            }
+            ans[index++] = arr[leftIndex] <= arr[rightIndex] ? arr[leftIndex++] : arr[rightIndex++];
         }
         while (leftIndex <= mid) {
             ans[index++] = arr[leftIndex++];
@@ -76,7 +121,7 @@ public class Code02_MergeSort {
 
     public static void main(String[] args) {
         int testTime = 100000;
-        int maxLength = 100;
+        int maxLength = 5;
         int maxValue = 100;
         for (int i = 0; i < testTime; i++) {
             int[] arr = getNewArray(maxLength, maxValue);
