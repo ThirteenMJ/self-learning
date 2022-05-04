@@ -1,122 +1,52 @@
 package beginClass.class08;
 
-import javax.sound.midi.Soundbank;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
- * 归并排序
+ * 快排
  *
  * @author: thirteenmj
- * @date: 2022-04-27 20:54
+ * @date: 2022-05-04 21:26
  */
-public class Code02_MergeSort {
-
-    public static void mergeSort(int[] arr) {
-        if (null == arr || arr.length < 2) {
-            return;
-        }
-        sort2(arr, 0, arr.length - 1);
-    }
+public class Code03_PartitionAndQuickSort {
 
     /**
-     * 递归方法
+     * 递归实现
      *
      * @param arr
-     * @param left
-     * @param right
      */
-    private static void sort1(int[] arr, int left, int right) {
+    public static void quickSort1(int[] arr) {
         if (null == arr || arr.length < 2) {
             return;
         }
+        process(arr, 0, arr.length - 1);
+    }
 
+    private static void process(int[] arr, int left, int right) {
         if (left >= right) {
             return;
         }
-
-        int mid = left + (right - left) / 2;
-
-        sort1(arr, left, mid);
-        sort1(arr, mid + 1, right);
-        merge(arr, left, mid, right);
+        int lessRight = left - 1;
+        int moreLeft = right;
+        int index = left;
+        while (index < moreLeft) {
+            if (arr[index] < arr[right]) {
+                swap(arr, index++, ++lessRight);
+            } else if (arr[index] > arr[right]){
+                swap(arr, index, --moreLeft);
+            } else {
+                index++;
+            }
+        }
+        swap(arr, moreLeft, right);
+        process(arr, left, lessRight);
+        process(arr, moreLeft + 1, right);
     }
 
-    /**
-     * 非递归方法
-     *
-     * @param arr
-     * @param left
-     * @param right
-     */
-    private static void sort2(int[] arr, int left, int right) {
-        if (null == arr || arr.length < 2) {
-            return;
-        }
-
-        if (left >= right) {
-            return;
-        }
-        int n = right - left + 1;
-        int step = 1;
-
-        while (step < n) {
-            int l = left;
-            while (l < right) {
-                int m = 0;
-                int r = 0;
-                if (right - l + 1> step) {
-                    m = l + step - 1;
-                } else {
-                    break;
-                }
-                if (right - m >= step) {
-                    r = m + step;
-                } else {
-                    r = right;
-                }
-                merge(arr, l, m, r);
-                if (r == right) {
-                    break;
-                } else {
-                    l = r + 1;
-                }
-            }
-            if (step > (n >> 1)) {
-                break;
-            }
-            step *= 2;
-        }
-
-    }
-
-
-    /**
-     * 合并左右两遍
-     *
-     * @param arr
-     * @param left
-     * @param mid
-     * @param right
-     */
-    private static void merge(int[] arr, int left, int mid, int right) {
-        int leftIndex = left;
-        int rightIndex = mid + 1;
-        int[] ans = new int[right - left + 1];
-        int index = 0;
-        while (leftIndex <= mid && rightIndex <= right) {
-            ans[index++] = arr[leftIndex] <= arr[rightIndex] ? arr[leftIndex++] : arr[rightIndex++];
-        }
-        while (leftIndex <= mid) {
-            ans[index++] = arr[leftIndex++];
-        }
-        while (rightIndex <= right) {
-            ans[index++] = arr[rightIndex++];
-        }
-        for (int i = 0; i < right - left + 1; i++) {
-            arr[left + i] = ans[i];
-        }
+    private static void swap(int[] arr, int index1, int index2) {
+        int temp = arr[index1];
+        arr[index1] = arr[index2];
+        arr[index2] = temp;
     }
 
     public static void main(String[] args) {
@@ -128,7 +58,7 @@ public class Code02_MergeSort {
             int[] arr1 = copyArray(arr);
             int[] arr2 = copyArray(arr);
             Arrays.sort(arr1);
-            mergeSort(arr2);
+            quickSort1(arr2);
             if (!isEquals(arr1, arr2)) {
                 System.out.println("出错了");
                 System.out.println("原数组：");
