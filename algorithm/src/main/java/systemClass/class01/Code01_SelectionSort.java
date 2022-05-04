@@ -105,8 +105,6 @@ public class Code01_SelectionSort {
                 return false;
             }
         }
-
-
         return true;
     }
 
