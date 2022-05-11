@@ -1,7 +1,5 @@
 package systemClass.class02;
 
-import java.util.List;
-
 /**
  * 将单链表中指定的值删除
  * 测试链接：https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof/
