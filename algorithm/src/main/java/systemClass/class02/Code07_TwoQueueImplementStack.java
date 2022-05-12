@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
+ * 欠：对数器
+ *
  * @author: thirteenmj
  * @date: 2022-05-11 15:48
  */
