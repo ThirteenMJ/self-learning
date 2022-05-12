@@ -17,5 +17,37 @@ public class Code07_TwoQueueImplementStack {
             queue = new LinkedList<>();
             help = new LinkedList<>();
         }
+
+        public void push(V value) {
+            queue.offer(value);
+        }
+
+        public V poll() {
+            if (queue.size() == 0) {
+                throw new RuntimeException("the stack is empty");
+            }
+
+            queueToPoll();
+
+            return queue.poll();
+        }
+
+        public V peek() {
+            if (queue.size() == 0) {
+                throw new RuntimeException("the stack is empty");
+            }
+            queueToPoll();
+            return queue.peek();
+        }
+
+        private void queueToPoll() {
+            while (queue.size() > 1) {
+                V poll = queue.poll();
+                help.offer(poll);
+            }
+            Queue<V> temp = queue;
+            queue = help;
+            help = temp;
+        }
     }
 }
