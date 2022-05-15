@@ -1,7 +1,7 @@
 package systemClass.class03;
 
 /**
- * 欠：对数器
+ * 小合问题，求数组每一个数的左边比它小的数之合
  *
  * @author: thirteenmj
  * @date: 2022-05-11 16:12
