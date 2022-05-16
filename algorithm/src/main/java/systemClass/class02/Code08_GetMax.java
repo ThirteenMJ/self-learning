@@ -21,4 +21,8 @@ public class Code08_GetMax {
         int rightMax = process(arr, mid + 1, r);
         return Math.max(leftMax, rightMax);
     }
+
+    public static void main(String[] args) {
+
+    }
 }
