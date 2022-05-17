@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 /**
  * 归并排序
- * 欠：非递归方法
  *
  * @author: thirteenmj
  * @date: 2022-05-12 14:29
@@ -59,18 +58,40 @@ public class Code01_MergeSort {
      * @param arr
      */
     public static void mergeSort2(int[] arr) {
-        process1(arr, 0, arr.length - 1);
+        process2(arr, 0, arr.length - 1);
     }
 
     public static void process2(int[] arr, int l, int r) {
+        if (null == arr || arr.length < 2) {
+            return;
+        }
+
         if (l >= r) {
             return;
         }
 
+        int length = (r - l + 1);
         int step = 1;
-        while (step < (r - l)) {
-            if (step > ((r - l + 1) >> 1)) {
+        while (step < length) {
+            int left = l;
+            while (left < r) {
+                if (step >= r - left + 1) {
+                    break;
+                }
+                int mid = left + step -1;
+                int right;
+                if (step > r - mid) {
+                    right = r;
+                } else {
+                    right = mid + step;
+                }
+                merge2(arr, left, mid, right);
+                left = right + 1;
+            }
+            if (step > (length >> 1)) {
                 break;
+            } else {
+                step <<= 1;
             }
         }
     }
@@ -98,24 +119,28 @@ public class Code01_MergeSort {
     }
 
     public static void main(String[] args) {
-        int maxLength = 100;
-        int maxValue = 10000;
-        int testTime = 10000;
+        int maxLength = 5;
+        int maxValue = 5;
+        int testTime = 100;
 
         for (int i = 0; i < testTime; i++) {
             int[] arr = generateRandomArray(maxValue, maxLength);
             int[] arr2 = copyArray(arr);
             int[] arr3 = copyArray(arr);
+            int[] arr4 = copyArray(arr);
             mergeSort1(arr2);
             Arrays.sort(arr3);
-            if (!isEquals(arr2, arr3)) {
+            mergeSort2(arr4);
+            if (!isEquals(arr2, arr3) || !isEquals(arr3, arr4)) {
                 System.out.println("出错了");
                 System.out.print("原数组：");
                 printArray(arr);
-                System.out.print("结果：");
-                printArray(arr2);
-                System.out.print("对照结果：");
+                System.out.print("对比结果：");
                 printArray(arr3);
+                System.out.print("递归结果：");
+                printArray(arr2);
+                System.out.print("非递归结果：");
+                printArray(arr4);
                 return;
             }
         }
