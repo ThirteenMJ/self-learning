@@ -53,6 +53,50 @@ public class Code01_MergeSort {
         }
     }
 
+    /**
+     * 非递归方法
+     *
+     * @param arr
+     */
+    public static void mergeSort2(int[] arr) {
+        process1(arr, 0, arr.length - 1);
+    }
+
+    public static void process2(int[] arr, int l, int r) {
+        if (l >= r) {
+            return;
+        }
+
+        int step = 1;
+        while (step < (r - l)) {
+            if (step > ((r - l + 1) >> 1)) {
+                break;
+            }
+        }
+    }
+
+    private static void merge2(int[] arr, int l, int mid, int r) {
+        int[] temp = new int[r - l + 1];
+        int leftIndex = l;
+        int rightIndex = mid + 1;
+        int index = 0;
+        while (leftIndex <= mid && rightIndex <= r) {
+            temp[index++] = arr[leftIndex] <= arr[rightIndex] ? arr[leftIndex++] : arr[rightIndex++];
+        }
+
+        while (leftIndex <= mid) {
+            temp[index++] = arr[leftIndex++];
+        }
+
+        while (rightIndex <= r) {
+            temp[index++] = arr[rightIndex++];
+        }
+
+        for (int i = 0; i < r - l + 1; i++) {
+            arr[l + i] = temp[i];
+        }
+    }
+
     public static void main(String[] args) {
         int maxLength = 100;
         int maxValue = 10000;
