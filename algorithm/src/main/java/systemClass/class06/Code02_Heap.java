@@ -1,6 +1,10 @@
 package systemClass.class06;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 /**
+ * 大根堆
  * 欠：对数器
  *
  * @author: thirteenmj
@@ -73,5 +77,49 @@ public class Code02_Heap {
             arr[index] = arr[target];
             arr[target] = temp;
         }
+    }
+
+    public static class MyComparator implements Comparator<Integer> {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return o2 - o1;
+        }
+    }
+
+    public static void main(String[] args) {
+        int maxValue = 10000;
+        int maxLength = 10000;
+        int testTime = 10000;
+        for (int i = 0; i < testTime; i++) {
+            int limit = (int) (Math.random() * maxLength);
+            MyMaxHeap myMaxHeap = new MyMaxHeap(limit);
+            PriorityQueue<Integer> queue = new PriorityQueue<Integer>(new MyComparator());
+            for (int j = 0; j < limit; j++) {
+                if (myMaxHeap.isEmpty() ^ queue.isEmpty()) {
+                    System.out.println("两个的是否空余不一致");
+                    return;
+                }
+                double time = Math.random();
+                if (time < 0.5) {
+                    if (!myMaxHeap.isFull()) {
+                        int value = ((int) (Math.random() * maxValue) - (int) (Math.random() * maxValue));
+                        queue.add(value);
+                        myMaxHeap.push(value);
+                    }
+                } else {
+                    if (!myMaxHeap.isEmpty()) {
+                        int myMaxHeapPop = myMaxHeap.pop();
+                        int queuePop = queue.poll();
+                        if (myMaxHeapPop != queuePop) {
+                            System.out.println("两个弹出的内容不一致！");
+                            System.out.println("myAns:" + myMaxHeapPop);
+                            System.out.println("testAns:" + queuePop);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("success!");
     }
 }

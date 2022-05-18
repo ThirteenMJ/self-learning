@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 /**
  * 利用大根堆进行排序
- * 欠：对数器
  *
  * @author: thirteenmj
  * @date: 2022-05-18 15:28
@@ -65,8 +64,8 @@ public class Code03_HeapSort {
     }
 
     public static void main(String[] args) {
-        int maxValue = 10;
-        int maxLength = 10;
+        int maxValue = 1000;
+        int maxLength = 1000;
         int testTime = 10000;
         for (int i = 0; i < testTime; i++) {
             int[] arr = generateRandomArray(maxValue, maxLength);
