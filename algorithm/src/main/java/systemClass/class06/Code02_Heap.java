@@ -5,7 +5,6 @@ import java.util.PriorityQueue;
 
 /**
  * 大根堆
- * 欠：对数器
  *
  * @author: thirteenmj
  * @date: 2022-05-17 22:55
