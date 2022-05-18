@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * 快排
+ * 欠：快排 2.0 和 3.0
  *
  * @author: thirteenmj
  * @date: 2022-05-17 20:22
