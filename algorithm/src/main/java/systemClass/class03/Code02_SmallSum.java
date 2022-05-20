@@ -107,11 +107,11 @@ public class Code02_SmallSum {
      * 随机生成一个数组
      *
      * @param maxValue
-     * @param maxSize
+     * @param maxLength
      * @return
      */
-    private static int[] generateRandomArray(int maxValue, int maxSize) {
-        int size = (int) ((maxSize + 1) * Math.random());
+    private static int[] generateRandomArray(int maxValue, int maxLength) {
+        int size = (int) ((maxLength + 1) * Math.random());
         int[] arr = new int[size];
         for (int i = 0; i < size; i++) {
             arr[i] = (int) ((maxValue + 1) * Math.random()) - (int) (maxValue * Math.random());
