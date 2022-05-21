@@ -4,7 +4,7 @@ package systemClass.class08;
 import java.util.HashMap;
 
 /**
- * 代码有问题
+ * 前缀树
  *
  * @author: thirteenmj
  * @date: 2022-05-21 17:39
