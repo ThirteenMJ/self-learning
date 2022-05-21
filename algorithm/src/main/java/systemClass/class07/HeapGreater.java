@@ -3,10 +3,9 @@ package systemClass.class07;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
 /**
- * 还没写完
- *
  * @author: thirteenmj
  * @date: 2022-05-21 17:56
  */
@@ -55,6 +54,32 @@ public class HeapGreater<V> {
         return object;
     }
 
+    public void remove(V object) {
+        V target = heap.get(heapSize - 1);
+        Integer index = indexMap.get(object);
+        heap.remove(--heapSize);
+        indexMap.remove(object);
+        if (!object.equals(target)) {
+            heap.add(index, target);
+            indexMap.put(target, index);
+            resign(target);
+        }
+    }
+
+    public void resign(V object) {
+        heapInsert(indexMap.get(object));
+        heapify(indexMap.get(object));
+    }
+
+    public List<V> getAllElements() {
+        List<V> list = new ArrayList<>();
+
+        for (V v : heap) {
+            list.add(v);
+        }
+        return list;
+    }
+
     private void heapify(int index) {
         int left = index * 2 + 1;
         while (left < heapSize) {
@@ -68,7 +93,6 @@ public class HeapGreater<V> {
             index = large;
             left = 2 * large + 1;
         }
-
     }
 
     private void heapInsert(int index) {
