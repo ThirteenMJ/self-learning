@@ -23,10 +23,10 @@ public class Code01_TrieTree {
         }
     }
 
-    public static class trie1 {
+    public static class Trie1 {
         private Node1 root;
 
-        public trie1() {
+        public Trie1() {
             this.root = new Node1();
         }
 
@@ -119,10 +119,10 @@ public class Code01_TrieTree {
         }
     }
 
-    public static class trie2 {
+    public static class Trie2 {
         private Node2 root;
 
-        public trie2() {
+        public Trie2() {
             this.root = new Node2();
         }
 
@@ -251,8 +251,8 @@ public class Code01_TrieTree {
         int strLen = 10;
         for (int i = 0; i < testTime; i++) {
             String[] strArr = generateRandomString(maxLength, strLen);
-            trie1 trie1 = new trie1();
-            trie2 trie2 = new trie2();
+            Trie1 trie1 = new Trie1();
+            Trie1 trie2 = new Trie1();
             Test test = new Test();
             for (int j = 0; j < strArr.length; j++) {
                 double time = Math.random();
