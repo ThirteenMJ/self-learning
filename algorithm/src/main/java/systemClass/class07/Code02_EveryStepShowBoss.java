@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 /**
  * 消费 -> 抽奖问题
+ * 未完成
  *
  * @author: thirteenmj
  * @date: 2022-05-19 22:18
