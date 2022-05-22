@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * 快排
- * 欠：快排 2.0 和 3.0
+ * 欠：快排 3.0
  *
  * @author: thirteenmj
  * @date: 2022-05-17 20:22
@@ -47,6 +47,47 @@ public class Code02_PartitionAndQuickSort {
         return lessRight;
     }
 
+    public static void quickSort2(int[] arr) {
+        if (null == arr || arr.length < 2) {
+            return;
+        }
+
+        process2(arr, 0, arr.length - 1);
+    }
+
+    private static void process2(int[] arr, int left, int right) {
+        if (left >= right) {
+            return;
+        }
+        int[] process = netherlandsFlag(arr, left, right);
+        process1(arr, left, process[0] -1);
+        process1(arr, process[1] + 1, right);
+    }
+
+    private static int[] netherlandsFlag(int[] arr, int left, int right) {
+        if (left > right) {
+            return new int[]{-1, -1};
+        }
+        if (left == right) {
+            return new int[]{left, right};
+        }
+
+        int lessRight = left -1;
+        int moreLeft = right;
+        int index =left;
+        while (index < moreLeft) {
+            if (arr[index] < arr[right]) {
+                swap(arr, index++, ++lessRight);
+            } else if (arr[index] == arr[right]) {
+                index++;
+            } else {
+                swap(arr, index, --moreLeft);
+            }
+        }
+        swap(arr, moreLeft, right);
+        return new int[]{lessRight + 1, moreLeft};
+    }
+
     public static void swap(int[] arr, int i, int j) {
         int tmp = arr[i];
         arr[i] = arr[j];
@@ -61,11 +102,13 @@ public class Code02_PartitionAndQuickSort {
             int[] arr = generateRandomArray(maxValue, maxLength);
             int[] arr2 = copyArray(arr);
             int[] arr3 = copyArray(arr);
+            int[] arr4 = copyArray(arr);
 
             Arrays.sort(arr2);
             quickSort1(arr3);
+            quickSort2(arr4);
 
-            if (!isEquals(arr2, arr3)) {
+            if (!isEquals(arr2, arr3) || !isEquals(arr2, arr4)) {
                 System.out.println("出错了！");
                 System.out.println("原数组：");
                 printArray(arr);
@@ -73,6 +116,8 @@ public class Code02_PartitionAndQuickSort {
                 printArray(arr2);
                 System.out.println("排序数组1：");
                 printArray(arr3);
+                System.out.println("排序数组2：");
+                printArray(arr4);
                 return;
             }
         }
