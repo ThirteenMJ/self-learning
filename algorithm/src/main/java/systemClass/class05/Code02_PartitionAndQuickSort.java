@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 /**
  * 快排
- * 欠：快排 3.0
  *
  * @author: thirteenmj
  * @date: 2022-05-17 20:22
@@ -88,6 +87,28 @@ public class Code02_PartitionAndQuickSort {
         return new int[]{lessRight + 1, moreLeft};
     }
 
+    public static void quickSort3(int[] arr) {
+        if (null == arr || arr.length < 2) {
+            return;
+        }
+
+        process3(arr, 0, arr.length - 1);
+    }
+
+    private static void process3(int[] arr, int left, int right) {
+        if (left >= right) {
+            return;
+        }
+
+        int number = left + (int) (Math.random() * (right - left + 1));
+
+        swap(arr, right, number);
+
+        int[] process = netherlandsFlag(arr, left, right);
+        process1(arr, left, process[0] -1);
+        process1(arr, process[1] + 1, right);
+    }
+
     public static void swap(int[] arr, int i, int j) {
         int tmp = arr[i];
         arr[i] = arr[j];
@@ -103,12 +124,14 @@ public class Code02_PartitionAndQuickSort {
             int[] arr2 = copyArray(arr);
             int[] arr3 = copyArray(arr);
             int[] arr4 = copyArray(arr);
+            int[] arr5 = copyArray(arr);
 
             Arrays.sort(arr2);
             quickSort1(arr3);
             quickSort2(arr4);
+            quickSort3(arr5);
 
-            if (!isEquals(arr2, arr3) || !isEquals(arr2, arr4)) {
+            if (!isEquals(arr2, arr3) || !isEquals(arr2, arr4) || !isEquals(arr2, arr5)) {
                 System.out.println("出错了！");
                 System.out.println("原数组：");
                 printArray(arr);
@@ -118,6 +141,8 @@ public class Code02_PartitionAndQuickSort {
                 printArray(arr3);
                 System.out.println("排序数组2：");
                 printArray(arr4);
+                System.out.println("排序数组3：");
+                printArray(arr5);
                 return;
             }
         }
