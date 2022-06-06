@@ -48,19 +48,18 @@ public class Code01_FindFirstIntersectNode {
         if (null == head1 || null == head2) {
             return null;
         }
-        int length1 = 1;
-        int length2 = 1;
 
         Node cur1 = head1;
         Node cur2 = head2;
 
+        int n = 0;
         while (cur1.next != null){
-            length1++;
+            n++;
             cur1 = cur1.next;
         }
 
         while (cur2.next != null){
-            length2++;
+            n--;
             cur2 = cur2.next;
         }
 
@@ -69,24 +68,21 @@ public class Code01_FindFirstIntersectNode {
             return null;
         }
 
-        int ans = length1 - length2;
+        cur1 = n > 0 ? head1 : head2;
+        cur2 = cur1 == head1 ? head2 : head1;
+        n = Math.abs(n);
 
-        while (ans < 0) {
-            ans++;
-            head2 = head2.next;
+        while (n > 0) {
+            n--;
+            cur1 = cur1.next;
         }
 
-        while (ans > 0) {
-            ans--;
-            head1 = head1.next;
+        while (cur1 != cur2) {
+            cur1 = cur1.next;
+            cur2 = cur2.next;
         }
 
-        while (head1 != head2) {
-            head1 = head1.next;
-            head2 = head2.next;
-        }
-
-        return head1;
+        return cur1;
     }
 
     /**
@@ -99,10 +95,42 @@ public class Code01_FindFirstIntersectNode {
      * @return
      */
     private static Node bothLoop(Node head1, Node loop1, Node head2, Node loop2) {
-        if (loop1 != loop2) {
+        Node cur1 = null;
+        Node cur2 = null;
+        if (loop1 == loop2) {
+            cur1 = head1;
+            cur2 = head2;
+            int n = 0;
+            while (cur1 != loop1){
+                n++;
+                cur1 = cur1.next;
+            }
+            while (cur2 != loop2){
+                n--;
+                cur2 = cur2.next;
+            }
+            cur1 = n > 0 ? head1 : head2;
+            cur2 = cur1 == head1 ? head2 : head1;
+            n = Math.abs(n);
+            while (n != 0) {
+                n--;
+                cur1 = cur1.next;
+            }
+            while (cur1 != cur2) {
+                cur1 = cur1.next;
+                cur2 = cur2.next;
+            }
+            return cur1;
+        } else {
+            cur1 = loop1.next;
+            while (cur1 != loop1) {
+                if (cur1 == head2) {
+                    return loop1;
+                }
+                cur1 = cur1.next;
+            }
             return null;
         }
-        return null;
     }
 
     /**
@@ -112,18 +140,18 @@ public class Code01_FindFirstIntersectNode {
      * @return
      */
     private static Node getLoopNode(Node head) {
-        if (null == head) {
+        if (null == head || null == head.next || null == head.next.next) {
             return null;
         }
-        Node slow = head;
-        Node fast = head;
-        while (fast.next != null && fast.next.next != null) {
+        Node slow = head.next;
+        Node fast = head.next.next;
+        while (slow != fast) {
+            if (null == fast.next || null == fast.next.next) {
+                return null;
+            }
+
             slow = slow.next;
             fast = fast.next.next;
-        }
-
-        if (slow != fast) {
-            return null;
         }
 
         fast = head;
@@ -133,5 +161,48 @@ public class Code01_FindFirstIntersectNode {
         }
 
         return slow;
+    }
+
+    public static void main(String[] args) {
+        // 1->2->3->4->5->6->7->null
+        Node head1 = new Node(1);
+        head1.next = new Node(2);
+        head1.next.next = new Node(3);
+        head1.next.next.next = new Node(4);
+        head1.next.next.next.next = new Node(5);
+        head1.next.next.next.next.next = new Node(6);
+        head1.next.next.next.next.next.next = new Node(7);
+
+        // 0->9->8->6->7->null
+        Node head2 = new Node(0);
+        head2.next = new Node(9);
+        head2.next.next = new Node(8);
+        head2.next.next.next = head1.next.next.next.next.next; // 8->6
+        System.out.println(getIntersectNode(head1, head2).value);
+        System.out.println("=====================================");
+        // 1->2->3->4->5->6->7->4...
+        head1 = new Node(1);
+        head1.next = new Node(2);
+        head1.next.next = new Node(3);
+        head1.next.next.next = new Node(4);
+        head1.next.next.next.next = new Node(5);
+        head1.next.next.next.next.next = new Node(6);
+        head1.next.next.next.next.next.next = new Node(7);
+        head1.next.next.next.next.next.next = head1.next.next.next; // 7->4
+        System.out.println("=====================================");
+        // 0->9->8->2...
+        head2 = new Node(0);
+        head2.next = new Node(9);
+        head2.next.next = new Node(8);
+        head2.next.next.next = head1.next; // 8->2
+        System.out.println(getIntersectNode(head1, head2).value);
+        System.out.println("=====================================");
+        // 0->9->8->6->4->5->6..
+        head2 = new Node(0);
+        head2.next = new Node(9);
+        head2.next.next = new Node(8);
+        head2.next.next.next = head1.next.next.next.next.next; // 8->6
+        System.out.println(getIntersectNode(head1, head2).value);
+
     }
 }
