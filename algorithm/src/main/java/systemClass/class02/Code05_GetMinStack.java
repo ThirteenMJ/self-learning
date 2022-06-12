@@ -5,7 +5,6 @@ import java.util.Stack;
 
 /**
  * 每次弹出的都是栈内的最小值
- * 欠：对数器未写
  *
  * @author: thirteenmj
  * @date: 2022-05-11 15:25
