@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
+ * 两个队列实现栈
  * 欠：对数器
  *
  * @author: thirteenmj

@@ -3,6 +3,7 @@ package systemClass.class02;
 import java.util.Stack;
 
 /**
+ * 两个栈实现队列
  * 欠：对数器
  *
  * @author: thirteenmj
