@@ -82,6 +82,25 @@ public class Code03_UnRecursiveTraversalBT {
         System.out.println();
     }
 
+    public static void post2(Node head) {
+        System.out.print("post2-order:");
+        Stack<Node> stack = new Stack<>();
+        stack.add(head);
+        Node c = null;
+        while (!stack.isEmpty()) {
+            c = stack.peek();
+            if (c.left != null && head != c.left && head != c.right) {
+                stack.add(c.left);
+            } else if (c.right != null && head != c.right) {
+                stack.add(c.right);
+            } else {
+                System.out.print(stack.pop().value + " ");
+                head = c;
+            }
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
         Node head = new Node(1);
         head.left = new Node(2);
@@ -97,7 +116,7 @@ public class Code03_UnRecursiveTraversalBT {
         System.out.println("========");
         post1(head);
         System.out.println("========");
-//        pos2(head);
-//        System.out.println("========");
+        post2(head);
+        System.out.println("========");
     }
 }
