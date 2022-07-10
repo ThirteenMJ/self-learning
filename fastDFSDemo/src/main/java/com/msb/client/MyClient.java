@@ -2,10 +2,7 @@ package com.msb.client;
 
 import com.msb.utils.FastDFSClient;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -16,16 +13,34 @@ import java.util.UUID;
 public class MyClient {
 
     public static void main(String[] args) {
-
         try {
-            String pictureAddress = "/Users/thirteenmj/Pictures/截图/iShot2022-05-24 10.40.56.png";
-            File file = new File(pictureAddress);
-            InputStream inputStream = new FileInputStream(file);
-            String fileName = UUID.randomUUID().toString() + ".png";
-            String[] result = FastDFSClient.uploadFile(inputStream, fileName);
-            System.out.println(Arrays.toString(result));
-        } catch (FileNotFoundException e) {
+            String pictureAddress = "/Users/thirteenmj/Pictures/截图/iShot_2022-06-02_16.01.19.png";
+            String targetAddress = "/Users/thirteenmj/Downloads/iShot_2022-06-02_16.01.19.png";
+            String[] result = uploadFile(pictureAddress);
+            downLoadFile(result[0], result[1], targetAddress);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void downLoadFile(String groupName, String fileUrl, String fileTargetFileAddress) throws Exception {
+        InputStream is = FastDFSClient.downloadFile(groupName, fileUrl);
+        OutputStream os = new FileOutputStream(fileTargetFileAddress);
+        int index = 0;
+        while ((index = is.read()) != -1) {
+            os.write(index);
+        }
+        os.flush();
+        os.close();
+        is.close();
+    }
+
+    private static String[] uploadFile(String fileAddress) throws FileNotFoundException {
+        File file = new File(fileAddress);
+        InputStream inputStream = new FileInputStream(file);
+        String fileName = UUID.randomUUID().toString() + ".png";
+        String[] result = FastDFSClient.uploadFile(inputStream, fileName);
+        System.out.println(Arrays.toString(result));
+        return result;
     }
 }
