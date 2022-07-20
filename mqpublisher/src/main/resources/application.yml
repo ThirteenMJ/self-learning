@@ -1,0 +1,5 @@
+spring:
+  rabbitmq:
+    host: 47.117.64.237
+    username: mashibing
+    password: mashibing
