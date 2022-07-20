@@ -19,4 +19,14 @@ public class DemoReceive {
     public void demo2(String message) {
         System.out.println("获取到的消息222：" + message);
     }
+
+    @RabbitListener(queues = "myFanout1")
+    public void demo3(String message) {
+        System.out.println("fanout1:" + message);
+    }
+
+    @RabbitListener(queues = "myFanout2")
+    public void demo4(String message) {
+        System.out.println("fanout2:" + message);
+    }
 }

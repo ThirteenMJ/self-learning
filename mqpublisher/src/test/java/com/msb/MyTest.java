@@ -23,4 +23,10 @@ public class MyTest {
         amqpTemplate.convertAndSend("myQueue", "这是我的内容");
         System.out.println("发送成功!");
     }
+
+    @Test
+    public void testMethod2() {
+        amqpTemplate.convertAndSend("amq.fanout", "core", "fanout msg");
+        System.out.println("发送成功!");
+    }
 }
