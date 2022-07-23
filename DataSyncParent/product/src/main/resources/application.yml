@@ -1,0 +1,5 @@
+dubbo:
+  application:
+    name: dubbo-product
+  registry:
+    address: zookeeper://47.117.64.237:2181
