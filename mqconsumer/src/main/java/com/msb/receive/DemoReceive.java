@@ -29,4 +29,14 @@ public class DemoReceive {
     public void demo4(String message) {
         System.out.println("fanout2:" + message);
     }
+
+    @RabbitListener(queues = "topic1")
+    public void demo5(String message) {
+        System.out.println("topic1:" + message);
+    }
+
+    @RabbitListener(queues = "topic2")
+    public void demo6(String message) {
+        System.out.println("topic2:" + message);
+    }
 }

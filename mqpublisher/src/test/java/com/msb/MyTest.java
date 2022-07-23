@@ -29,4 +29,10 @@ public class MyTest {
         amqpTemplate.convertAndSend("amq.fanout", "core", "fanout msg");
         System.out.println("发送成功!");
     }
+
+    @Test
+    public void testMethod3() {
+        amqpTemplate.convertAndSend("amq.topic", "com.msb.a.b", "topic msg");
+        System.out.println("发送成功!");
+    }
 }

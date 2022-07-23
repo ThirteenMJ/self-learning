@@ -1,9 +1,6 @@
 package com.msb.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.FanoutExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,11 +11,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqConfig {
 
+    /**
+     * 垂直交换器
+     *
+     * @return
+     */
     @Bean
     public Queue queue() {
         return new Queue("myQueue");
     }
 
+    /**
+     * 环形交换器
+     *
+     * @return
+     */
     @Bean
     public Queue createQueue1() {
         return new Queue("myFanout1");
@@ -46,6 +53,39 @@ public class RabbitMqConfig {
         return BindingBuilder
                 .bind(createQueue2)
                 .to(getFanoutExchange);
+    }
+
+    @Bean
+    public Queue topicQueue1() {
+        return new Queue("topic1");
+    }
+
+    @Bean
+    public Queue topicQueue2() {
+        return new Queue("topic2");
+    }
+
+    @Bean
+    public TopicExchange topicExchange() {
+        return new TopicExchange("amq.topic");
+    }
+
+    /**
+     * * 只能代替 两个点之间的内容，
+     * # 表示 0个 或者多个字符
+     *
+     * @param topicQueue1
+     * @param topicExchange
+     * @return
+     */
+    @Bean
+    public Binding topicBinding(Queue topicQueue1, TopicExchange topicExchange) {
+        return BindingBuilder.bind(topicQueue1).to(topicExchange).with("com.msb.*");
+    }
+
+    @Bean
+    public Binding topicBinding2(Queue topicQueue2, TopicExchange topicExchange) {
+        return BindingBuilder.bind(topicQueue2).to(topicExchange).with("com.msb.#");
     }
 
 
