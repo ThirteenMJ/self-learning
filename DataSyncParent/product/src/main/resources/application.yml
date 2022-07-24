@@ -3,3 +3,7 @@ dubbo:
     name: dubbo-product
   registry:
     address: zookeeper://47.117.64.237:2181
+
+spring:
+  profiles:
+    active: rabbitmq

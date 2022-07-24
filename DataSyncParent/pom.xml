@@ -16,6 +16,8 @@
         <module>product</module>
         <module>search</module>
         <module>common</module>
+        <module>rabbitmq</module>
+        <module>receive</module>
     </modules>
 
     <properties>
