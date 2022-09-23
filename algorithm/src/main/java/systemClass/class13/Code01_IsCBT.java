@@ -1,4 +1,4 @@
-package systemClass.class12;
+package systemClass.class13;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -6,9 +6,10 @@ import java.util.Queue;
 /**
  * 判断二叉树是否是完全二叉树
  * @author: thirteenmj
- * @date: 2022-09-20 13:49
+ * @date: 2022-09-23 14:38
  */
 public class Code01_IsCBT {
+
     public static class Node {
         public int value;
         public Node left;
