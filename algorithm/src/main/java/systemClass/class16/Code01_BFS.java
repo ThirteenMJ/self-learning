@@ -6,7 +6,7 @@ import java.util.Queue;
 import java.util.Set;
 
 /**
- * 宽度优先级遍历
+ * 宽度优先级遍历-BFS
  * @author: thirteenmj
  * @date: 2022-11-10 11:22
  */
